@@ -26,7 +26,7 @@ class GUI : public QWidget
         Table(QWidget* parent = 0) : QVector<QVector<QPair<QPoint, QLineEdit*> > >(SIZE) {
             parent->setLayout(new QGridLayout);
             //Тут ещё добавим проверочку, чтобы в поля можно было вводить только русские буквы или пробел или вообще уж ничего не вводить
-            const QValidator* valid(new QRegularExpressionValidator(QRegularExpression("[а-яА-Я ]?"), parent));
+            const QValidator* valid(new QRegularExpressionValidator(QRegularExpression(tr("[a-zA-Z ]?")), parent));
             for (auto& i : *this) {
                 i.resize(SIZE);
                 for (QPair<QPoint, QLineEdit*>& j : i) {
@@ -47,14 +47,15 @@ public:
         : QWidget(parent)
         , t(this)
     {
+        this->setWindowTitle(tr("squareword"));
         //Теперь поля ввода уже созданы. Осталось их раскидать по виджету
         for (int i(0); i != SIZE; ++i) {
             static_cast<QGridLayout*>(layout())->addWidget(new QLabel(QString::number(SIZE - i)), i, 0);
             static_cast<QGridLayout*>(layout())->addWidget(new QLabel(QString('a' + i)), SIZE + 1, i + 1, 1, 1, Qt::AlignCenter);
         }
         //Ещё нужно расположить кнопочки
-        QPushButton* const clear(new QPushButton("Почистить", this));
-        QPushButton* const think(new QPushButton("Подумать", this));
+        QPushButton* const clear(new QPushButton(tr("Clear"), this));
+        QPushButton* const think(new QPushButton(tr("Run"), this));
         static_cast<QGridLayout*>(layout())->addWidget(clear, SIZE + 2, 0, 1, (SIZE + 1) >> 1);
         static_cast<QGridLayout*>(layout())->addWidget(think, SIZE + 2, (SIZE + 1) >> 1, 1, (SIZE + 1) >> 1);
 
@@ -80,21 +81,21 @@ public:
                 setData(Engine::findSolve(data));
             } catch(...) {
                 //Если данные противоречивы, скажем пользователю об этом
-                QMessageBox::warning(this, "Solve exception", "It's impossible to find any solution");
+                QMessageBox::warning(this, tr("Solve exception"), tr("It's impossible to find any solution"));
             }
         });
 
         //ещё хорошо-бы заполнить сразу поля ввода какими-нибудь входными значениями. Возьмём в их качестве приведнные в задании.
         CBasicMatrix<QChar> initial(SIZE, SIZE);
         initial.fill(' ');
-        initial[0][0] = QString("С")[0];
-        initial[0][1] = QString("Л")[0];
-        initial[0][2] = QString("Е")[0];
-        initial[0][3] = QString("З")[0];
-        initial[0][4] = QString("А")[0];
-        initial[2][2] = QString("Л")[0];
-        initial[2][3] = QString("Е")[0];
-        initial[2][4] = QString("С")[0];
+        initial[0][0] = tr("w")[0];
+        initial[0][1] = tr("a")[0];
+        initial[0][2] = tr("t")[0];
+        initial[0][3] = tr("e")[0];
+        initial[0][4] = tr("r")[0];
+        initial[2][2] = tr("r")[0];
+        initial[2][3] = tr("a")[0];
+        initial[2][4] = tr("t")[0];
         setData(initial);
 
     }

@@ -15,10 +15,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        gui.cpp \
     kernel/engine.cpp
-SOURCES += kernel/cbasicmatrix.cpp
+SOURCES +=
 
 HEADERS  += gui.h \
     kernel/engine.h
 HEADERS += kernel/cbasicmatrix.h
+
+TRANSLATIONS    = ru.ts
+
+DISTFILES += \
+    ru.ts
+
+RESOURCES += \
+    res.qrc
