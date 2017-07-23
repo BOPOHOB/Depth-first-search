@@ -67,7 +67,7 @@ public:
         }
 
         //тут собственно происходит вызов алгоритма
-        connect(think, QPushButton::clicked, [this]() {
+        connect(think, &QPushButton::clicked, [this]() {
             CBasicMatrix<QChar> data(SIZE, SIZE);
             //Сначала выписываем значения полей ввод в матрицу
             for (auto& i : this->t) {
